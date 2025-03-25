@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { deepStrictEqual as assertDeepStrictEqual } from 'node:assert';
+import { isDeepStrictEqual } from 'node:util';
 import tests from '../__tests__/__helpers__/testSuites.js';
 
 import deepEql from 'deep-eql';
@@ -18,19 +18,7 @@ import { isEqual as isEqualUnderscore } from 'underscore';
 import { Bench } from 'tinybench';
 
 const packages = {
-  'assert.deepStrictEqual': (a, b) => {
-    try {
-      return assertDeepStrictEqual(a, b) === undefined;
-    } catch (e) {
-      const message = e.message.split('\n')[0];
-
-      if (message.includes('Expected values to be strictly deep-equal')) {
-        return false;
-      }
-
-      throw e;
-    }
-  },
+  'util.isDeepStrictEqual': isDeepStrictEqual,
   'deep-eql': deepEql,
   'deep-equal': deepEqual,
   dequal: dequal,
